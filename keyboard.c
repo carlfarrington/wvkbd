@@ -180,6 +180,7 @@ kbd_unpress_key(struct kbd *kb, uint32_t time) {
 
 		if (unlatch_shift) {
 			kb->mods ^= Shift;
+			zwp_virtual_keyboard_v1_key(kb->vkbd, time, 42, WL_KEYBOARD_KEY_STATE_RELEASED);
 			zwp_virtual_keyboard_v1_modifiers(kb->vkbd, kb->mods, 0, 0, 0);
 		}
 
@@ -187,6 +188,7 @@ kbd_unpress_key(struct kbd *kb, uint32_t time) {
 			zwp_virtual_keyboard_v1_key(kb->vkbd, time, 127, // COMP key
 			                            WL_KEYBOARD_KEY_STATE_RELEASED);
 		} else {
+			fprintf(stderr, "release key %d\n", kb->last_press->code);
 			zwp_virtual_keyboard_v1_key(kb->vkbd, time, kb->last_press->code,
 			                            WL_KEYBOARD_KEY_STATE_RELEASED);
 		}
@@ -285,10 +287,40 @@ kbd_press_key(struct kbd *kb, struct key *k, uint32_t time) {
 		}
 		if (kb->mods & k->code) {
 			kbd_draw_key(kb, k, Press);
+			switch (k->code) {
+				case Shift:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 42, WL_KEYBOARD_KEY_STATE_PRESSED);
+					break;
+				case Ctrl:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 29, WL_KEYBOARD_KEY_STATE_PRESSED);
+					break;
+				case Alt:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 56, WL_KEYBOARD_KEY_STATE_PRESSED);
+					break;
+				case CapsLock:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 58, WL_KEYBOARD_KEY_STATE_PRESSED);
+				default:
+					break;
+			}
 		} else {
 			kbd_draw_key(kb, k, Unpress);
-		}
+			switch (k->code) {
+				case Shift:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 42, WL_KEYBOARD_KEY_STATE_RELEASED);
+					break;
+				case Ctrl:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 29, WL_KEYBOARD_KEY_STATE_RELEASED);
+					break;
+				case Alt:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 56, WL_KEYBOARD_KEY_STATE_RELEASED);
+					break;
+				case CapsLock:
+					zwp_virtual_keyboard_v1_key(kb->vkbd, time, 58, WL_KEYBOARD_KEY_STATE_RELEASED);
+				default:
+					break;
+			}
 		zwp_virtual_keyboard_v1_modifiers(kb->vkbd, kb->mods, 0, 0, 0);
+		}
 		break;
 	case Layout:
 		// switch to the layout determined by the key

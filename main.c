@@ -36,7 +36,7 @@ static struct drw draw_ctx;
 static struct drwsurf draw_surf;
 
 /* layer surface parameters */
-static uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_TOP;
+static uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_OVERLAY;
 static uint32_t anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM |
                          ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT |
                          ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT;
@@ -262,7 +262,7 @@ display_handle_geometry(void *data, struct wl_output *wl_output, int x, int y,
 
 	bool landscape = physical_width > physical_height;
 	if (landscape == keyboard.landscape) return;
-	keyboard.landscape = landscape;
+	keyboard.landscape = 0; // Disable forced landscape on desktop computer so that user can change layouts.
 
 	enum layout_id layer;
 	if (keyboard.landscape) {
