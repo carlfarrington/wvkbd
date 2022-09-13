@@ -188,7 +188,6 @@ kbd_unpress_key(struct kbd *kb, uint32_t time) {
 			zwp_virtual_keyboard_v1_key(kb->vkbd, time, 127, // COMP key
 			                            WL_KEYBOARD_KEY_STATE_RELEASED);
 		} else {
-			fprintf(stderr, "release key %d\n", kb->last_press->code);
 			zwp_virtual_keyboard_v1_key(kb->vkbd, time, kb->last_press->code,
 			                            WL_KEYBOARD_KEY_STATE_RELEASED);
 		}
