@@ -1,16 +1,17 @@
 /* constants */
 /* how tall the keyboard should be by default (can be overriden) */
-#define KBD_PIXEL_HEIGHT 240
+#define KBD_PIXEL_HEIGHT 380
 
 /* how tall the keyboard should be by default (can be overriden) */
-#define KBD_PIXEL_LANDSCAPE_HEIGHT 120
+#define KBD_PIXEL_LANDSCAPE_HEIGHT 380
 
 /* spacing around each key */
-#define KBD_KEY_BORDER 1
+#define KBD_KEY_BORDER 4
 
 /* layout declarations */
 enum layout_id {
 	Full = 0,
+	ShowKbd,
 	Special,
 	Simple,
 	SimpleGrid,
@@ -77,11 +78,11 @@ static struct key keys_full[], keys_special[], keys_simple[], keys_simplegrid[],
   keys_compose_cyr_i[], keys_compose_cyr_j[], keys_compose_cyr_e[],
   keys_compose_cyr_u[], keys_compose_cyr_l[], keys_compose_cyr_n[],
   keys_compose_cyr_tse[], keys_compose_cyr_che[], keys_compose_cyr_g[],
-  keys_compose_cyr_k[], keys_dialer[];
+  keys_compose_cyr_k[], keys_dialer[], keys_showkbd[];
 
 static struct layout layouts[NumLayouts] = {
   [Full] = {keys_full, "latin", "full"}, // second parameter is the keymap name
-                                         // third parameter is the layout name
+  [ShowKbd] = {keys_showkbd, "latin", "showkbd"},                                       // third parameter is the layout name
   [Special] = {keys_special, "latin", "special"},
   [Simple] = {keys_simple, "latin", "simple"},
   [SimpleGrid] = {keys_simplegrid, "latin", "simplegrid"},
@@ -163,9 +164,10 @@ static struct layout layouts[NumLayouts] = {
  * - layout: layout to switch to when key is pressed
  */
 static struct key keys_full[] = {
-  {"Esc", "Esc", 1.0, Code, KEY_ESC, .scheme = 1},
+//  {"Tab", "Tab", 1.0, Code, KEY_TAB, .scheme = 1},
+/*
+      	{"Esc", "Esc", 1.0, Code, KEY_ESC, .scheme = 1},
   {"Ctr", "Ctr", 1.0, Mod, Ctrl, .scheme = 1},
-  {"Tab", "Tab", 1.0, Code, KEY_TAB, .scheme = 1},
   {"↑", "↑", 1.0, Code, KEY_UP, .scheme = 1},
   {"↓", "↓", 1.0, Code, KEY_DOWN, .scheme = 1},
   {"←", "←", 1.0, Code, KEY_LEFT, .scheme = 1},
@@ -173,11 +175,14 @@ static struct key keys_full[] = {
   {"'", "\"", 1.0, Code, KEY_APOSTROPHE, .scheme = 1},
   {";", ":", 1.0, Code, KEY_SEMICOLON, .scheme = 1},
   {"/", ">", 1.0, Code, KEY_SLASH, .scheme = 1},
+  {"⌫", "⌫", 1.5, Code, KEY_BACKSPACE, .scheme = 1},
   {"", "", 0.0, EndRow},
+*/
 
+  {"Esc", "Esc", 1.0, Code, KEY_ESC, .scheme = 1},
   {"1", "!", 1.0, Code, KEY_1},
-  {"2", "@", 1.0, Code, KEY_2},
-  {"3", "#", 1.0, Code, KEY_3},
+  {"2", "\"", 1.0, Code, KEY_2},
+  {"3", "£", 1.0, Code, KEY_3},
   {"4", "$", 1.0, Code, KEY_4},
   {"5", "%", 1.0, Code, KEY_5},
   {"6", "^", 1.0, Code, KEY_6},
@@ -187,9 +192,10 @@ static struct key keys_full[] = {
   {"0", ")", 1.0, Code, KEY_0},
   {"-", "_", 1.0, Code, KEY_MINUS},
   {"=", "+", 1.0, Code, KEY_EQUAL},
+  {"⌫", "⌫", 1.5, Code, KEY_BACKSPACE, .scheme = 1},
   {"", "", 0.0, EndRow},
 
-  {"", "", 0.5, Pad},
+  {"Tab", "Tab", 1.0, Code, KEY_TAB, .scheme = 1},
   {"q", "Q", 1.0, Code, KEY_Q, &layouts[Emoji]},
   {"w", "W", 1.0, Code, KEY_W, &layouts[ComposeW]},
   {"e", "E", 1.0, Code, KEY_E, &layouts[ComposeE]},
@@ -200,9 +206,15 @@ static struct key keys_full[] = {
   {"i", "I", 1.0, Code, KEY_I, &layouts[ComposeI]},
   {"o", "O", 1.0, Code, KEY_O, &layouts[ComposeO]},
   {"p", "P", 1.0, Code, KEY_P, &layouts[ComposeP]},
+  {"[", "{", 1.0, Code, KEY_LEFTBRACE},
+  {"]", "}", 1.0, Code, KEY_RIGHTBRACE},
   {"", "", 0.0, EndRow},
 
-  {"Cmp", "Cmp", 1.0, Compose, .scheme = 1},
+ // {"Ctrl", "Ctrl", 1.5, Mod, Ctrl, .scheme = 1},
+//  {"", "", 0.5, Pad},
+
+//  {"#", "~", 1.0, Code, KEY_BACKSLASH},
+  {"Ctrl", "Ctrl", 1.5, Mod, Ctrl, .scheme = 1},
   {"a", "A", 1.0, Code, KEY_A, &layouts[ComposeA]},
   {"s", "S", 1.0, Code, KEY_S, &layouts[ComposeS]},
   {"d", "D", 1.0, Code, KEY_D, &layouts[ComposeD]},
@@ -212,10 +224,17 @@ static struct key keys_full[] = {
   {"j", "J", 1.0, Code, KEY_J, &layouts[ComposeJ]},
   {"k", "K", 1.0, Code, KEY_K, &layouts[ComposeK]},
   {"l", "L", 1.0, Code, KEY_L, &layouts[ComposeL]},
-  {"", "", 0.5, Pad},
+  {";", ":", 1.0, Code, KEY_SEMICOLON},
+  {"Enter", "Enter", 1.5, Code, KEY_ENTER, .scheme = 1},
+
+//  {"\\", "|", 1.0, Code, KEY_102ND},
+//  {"", "", 0.5, Pad},
   {"", "", 0.0, EndRow},
 
-  {"⇧", "⇫", 1.5, Mod, Shift, .scheme = 1},
+//  {"Alt", "Alt", 1.0, Mod, Alt, .scheme = 1},
+  //{"⇧", "⇫", 1.0, Mod, Shift, .scheme = 1},
+  {"⇧", "⇫", 1.0, Mod, Shift, .scheme = 1},
+  {"\\", "|", 1.0, Code, KEY_102ND},
   {"z", "Z", 1.0, Code, KEY_Z, &layouts[ComposeZ]},
   {"x", "X", 1.0, Code, KEY_X, &layouts[ComposeX]},
   {"c", "C", 1.0, Code, KEY_C, &layouts[ComposeC]},
@@ -223,19 +242,29 @@ static struct key keys_full[] = {
   {"b", "B", 1.0, Code, KEY_B, &layouts[ComposeB]},
   {"n", "N", 1.0, Code, KEY_N, &layouts[ComposeN]},
   {"m", "M", 1.0, Code, KEY_M, &layouts[ComposeM]},
-  {"⌫", "⌫", 1.5, Code, KEY_BACKSPACE, .scheme = 1},
+  {",", "<", 1.0, Code, KEY_COMMA},
+  {".", ">", 1.0, Code, KEY_DOT},
+  {"/", "?", 1.0, Code, KEY_SLASH},
   {"", "", 0.0, EndRow},
 
-  {"Sym", "Sym", 1.0, NextLayer, .scheme = 1},
+
   {"Alt", "Alt", 1.0, Mod, Alt, .scheme = 1},
-  {",", "'", 1.0, Code, KEY_COMMA},
-  {"", "", 4.0, Code, KEY_SPACE},
-  {".", "?", 1.0, Code, KEY_DOT},
-  {"Enter", "Enter", 2.0, Code, KEY_ENTER, .scheme = 1},
+    {"#", "~", 1.0, Code, KEY_BACKSLASH},
+{"", "", 4.0, Code, KEY_SPACE},
+  {"⇧", "⇫", 1.0, Mod, Shift, .scheme = 1},
+
+  //  {"Enter", "Enter", 2.0, Code, KEY_ENTER, .scheme = 1},
 
   /* end of layout */
   {"", "", 0.0, Last},
 };
+
+static struct key keys_showkbd[] = {
+  {"Show", "Show", 1.0, NextLayer, .scheme = 1},
+  {"", "", 0.0, EndRow},
+  {"", "", 0.0, Last},
+};
+
 
 static struct key keys_special[] = {
   {"Esc", "Esc", 1.0, Code, KEY_ESC, .scheme = 1},

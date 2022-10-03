@@ -1,8 +1,8 @@
 #ifndef config_def_h_INCLUDED
 #define config_def_h_INCLUDED
 
-static const char *default_font = "Monospace 14";
-static const int transparency = 225;
+static const char *default_font = "Sans 22";
+static const int transparency = 255;
 
 struct clr_scheme scheme = {
   /* colors */

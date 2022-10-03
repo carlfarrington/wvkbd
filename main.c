@@ -37,9 +37,10 @@ static struct drwsurf draw_surf;
 
 /* layer surface parameters */
 static uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_OVERLAY;
-static uint32_t anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM |
-                         ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT |
-                         ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT;
+static uint32_t anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM; //|
+
+//ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT |
+  //                       ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT;
 
 /* application state */
 static bool run_display = true;
@@ -278,7 +279,7 @@ display_handle_geometry(void *data, struct wl_output *wl_output, int x, int y,
 	keyboard.layer_index = 0;
 
 	if (layer_surface) {
-		zwlr_layer_surface_v1_set_size(layer_surface, 0, height);
+		zwlr_layer_surface_v1_set_size(layer_surface, 1400, height); //Carl
 		zwlr_layer_surface_v1_set_exclusive_zone(layer_surface, height);
 		wl_surface_commit(draw_surf.surf);
 	}
@@ -413,7 +414,7 @@ show() {
 	layer_surface = zwlr_layer_shell_v1_get_layer_surface(
 	  layer_shell, draw_surf.surf, wl_output, layer, namespace);
 
-	zwlr_layer_surface_v1_set_size(layer_surface, 0, height);
+	zwlr_layer_surface_v1_set_size(layer_surface, 1400, height); //Carl
 	zwlr_layer_surface_v1_set_anchor(layer_surface, anchor);
 	zwlr_layer_surface_v1_set_exclusive_zone(layer_surface, height);
 	zwlr_layer_surface_v1_set_keyboard_interactivity(layer_surface, false);
