@@ -11,7 +11,6 @@
 /* layout declarations */
 enum layout_id {
 	Full = 0,
-	ShowKbd,
 	Special,
 	Simple,
 	SimpleGrid,
@@ -78,11 +77,10 @@ static struct key keys_full[], keys_special[], keys_simple[], keys_simplegrid[],
   keys_compose_cyr_i[], keys_compose_cyr_j[], keys_compose_cyr_e[],
   keys_compose_cyr_u[], keys_compose_cyr_l[], keys_compose_cyr_n[],
   keys_compose_cyr_tse[], keys_compose_cyr_che[], keys_compose_cyr_g[],
-  keys_compose_cyr_k[], keys_dialer[], keys_showkbd[];
+  keys_compose_cyr_k[], keys_dialer[];
 
 static struct layout layouts[NumLayouts] = {
   [Full] = {keys_full, "latin", "full"}, // second parameter is the keymap name
-  [ShowKbd] = {keys_showkbd, "latin", "showkbd"},                                       // third parameter is the layout name
   [Special] = {keys_special, "latin", "special"},
   [Simple] = {keys_simple, "latin", "simple"},
   [SimpleGrid] = {keys_simplegrid, "latin", "simplegrid"},
@@ -242,9 +240,9 @@ static struct key keys_full[] = {
   {"b", "B", 1.0, Code, KEY_B, &layouts[ComposeB]},
   {"n", "N", 1.0, Code, KEY_N, &layouts[ComposeN]},
   {"m", "M", 1.0, Code, KEY_M, &layouts[ComposeM]},
+  {"/", "?", 1.0, Code, KEY_SLASH},
   {",", "<", 1.0, Code, KEY_COMMA},
   {".", ">", 1.0, Code, KEY_DOT},
-  {"/", "?", 1.0, Code, KEY_SLASH},
   {"", "", 0.0, EndRow},
 
 
@@ -258,13 +256,6 @@ static struct key keys_full[] = {
   /* end of layout */
   {"", "", 0.0, Last},
 };
-
-static struct key keys_showkbd[] = {
-  {"Show", "Show", 1.0, NextLayer, .scheme = 1},
-  {"", "", 0.0, EndRow},
-  {"", "", 0.0, Last},
-};
-
 
 static struct key keys_special[] = {
   {"Esc", "Esc", 1.0, Code, KEY_ESC, .scheme = 1},
