@@ -2,6 +2,18 @@
 
 <img src="https://raw.githubusercontent.com/proycon/wvkbd/master/contrib/wvkbd-mobintl.jpg" width=300 /> <img src="https://raw.githubusercontent.com/proycon/wvkbd/master/contrib/wvkbd-mobintl-cyrillic.jpg" width=300 />
 
+This fork has been tweaked so that the modifier keys (shift, ctrl, alt) are sent as keypresses, rather than just modifier data. This is required for wlfreerdp to work with RDP to a Windows machine.
+
+Also changed to sit in the overlay layer of the layer_shell so that it displays on top of full screen app (wlfreerdp /f)
+
+Lastly, the width is reduced so that it sits in the middle rather than full width at the bottom. This is because I am using it on a large 24" touchscreen landscape monitor, not a portrait mobile device.
+
+Also the default theme has been changed to a brighter grey one.
+
+and the default layout has been altered to be British Englight (UK) with pound symbols and stuff.
+
+..
+
 This project aims to deliver a minimal but practically usable implementation of a wlroots on-screen
 keyboard in legible C. This will **only** be a keyboard, not a feedback buzzer,
 led blinker, or anything that requires more than what's needed to input text
