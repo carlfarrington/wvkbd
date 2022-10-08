@@ -10,7 +10,7 @@ Lastly, the width is reduced so that it sits in the middle rather than full widt
 
 Also the default theme has been changed to a brighter grey one.
 
-and the default layout has been altered to be British Englight (UK) with pound symbols and stuff.
+and the default layout has been altered to be British English (UK) with pound symbols and stuff.
 
 ..
 
